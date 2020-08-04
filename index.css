@@ -59,7 +59,7 @@ main {
 
 nav {
     width: 100%;
-    background-color: #2980b9;
+    background:linear-gradient(rgba(41, 128, 185, 1), rgba(255, 255, 255, 0.8));
     height: 110;
    
 }
@@ -86,14 +86,37 @@ nav {
 
 .stops li {
     list-style: none;
+    
+}
+
+.stops li div {
+    transition: all 0.3s;
+    background-color: none;
+    border-radius: 20%;
+}
+
+.stops li div:hover {
+    transform: scale(1.2, 1.2);
+    transition: all 0.3s;
+    background-color: white;
 }
 
 .stopspic {
+    display: block;
     width: 80px;
     height: 80px;
     border-radius: 50%;
+    margin: auto;
+    filter: gray;
+    -webkit-filter: grayscale(1);
+    transition: all 0.2s;
+    -webkit-transition: all .2s;  
 }
 
+.stopspic:hover {
+    filter: none;
+    -webkit-filter: grayscale(0);
+}
 .stopstitle {
     text-align: center;
     font-family: 'Secular One', sans-serif;
@@ -116,7 +139,6 @@ nav {
     text-align: center;
 }
 
-.siteTips h1,
 .siteTips h1 {
     text-align: right;
 }
@@ -133,16 +155,6 @@ nav {
     justify-content: space-between;
 }
 
-#hallstatt {
-    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('images/backgrounds/hallstatt.jpg');
-    background-repeat: round;
-}
-
-#legoland {
-    background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('images/backgrounds/legoland.jpg');
-    background-repeat: round;
-}
-
 .gallery img {
     width: 20%;
     height: auto;
@@ -153,15 +165,7 @@ nav {
     border: 3px solid black;
     margin: 5 auto;
 }
-/*
-.gallery img:hover {
-   transform: scale(1.3);
-   z-index: 11;
-   width: 50%;
-   height: auto;
-   margin: auto;
-}
-*/
+
 .panorama {
     width: 85.6%;
     border: 3px solid black;
@@ -173,18 +177,13 @@ nav {
     transition: 1s;
     z-index: 10;
 }
-/*
-.panorama img:hover {
-   transform: scale(1.3);
-   z-index: 20;
-}
-*/
 
 .divider {
     border-top: 8px solid #bbb;
     border-radius: 5px;
-    width: 90%;
+    width: 100%;
     margin: 20 auto;
+    background-image: linear-gradient(to right, rgba(41, 128, 185, 1), rgba(255, 255, 255, 0.6));
 }
 
 .video {
@@ -202,21 +201,22 @@ nav {
     position: fixed;
     width: 80%;
     height: auto;
-    background-color: white;
     border: 10px solid black;
     display: none;
     left: 10%;
     top: 0;
     margin: auto;
     z-index: 999;
+    background: radial-gradient(red , white);
 }
 
 .pic-display-show {
-    visibility: visible;
-    pointer-events: none; 
+    display: block;
+    opacity: 1;
+    transition: all 0.3s;
 }
 
-#pic-display img {
+#pic-display .mainImage {
     display: flex;
     height: auto;
     margin: 10px auto;
@@ -252,3 +252,11 @@ nav {
     color: white;
   }
 
+.flipOnHover {
+    transition: all 0.1s ease-in-out 0s;
+}
+
+.flipOnHover:hover {
+    transform: scale(-1, -1);
+    transition: all 0.3s ease-in-out 0s;
+}
