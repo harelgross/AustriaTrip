@@ -1,21 +1,32 @@
 const stops = {
   'firstSnow': {name: 'קבלת פנים',
-                markerPos: {x: 656,y: 443}},
-  'berchstesgaden': {name: 'ברכטסגאדן',
-                     markerPos: {x: 632,y: 485}},
-  'hohenwerfen': {name: 'טירת הוהנוורפן'},
+                markerPos: {x: 656,y: 443}
+              },
+  'berchtesgaden': {name: 'ברכטסגאדן',
+                     markerPos: {x: 632,y: 485}
+              },
+  'hohenwerfen': {name: 'טירת הוהנוורפן',
+                  markerPos: {x: 658, y: 522}
+              },
+  'salzburg': {name:'זלצבורג',
+               markerPos: {x: 638, y: 443}
+              },
   'hallstatt': {name: 'האלשטאט',
                 markerPos: {x: 738, y: 490}
-               },
+              },
   'legoland': {name: 'לגולנד',
                markerPos:{ x:206, y: 298}
               },
   'upsideDownHouse': {name: 'הבית ההפוך',
-                      markerPos:{ x:403, y: 563}},
+                      markerPos:{ x: 403, y: 563},
+                      additionalClasses: ['flipOnHover']
+              },
   'dinoWorld': {name: 'עולם הדינוזאורים'},
   'kitzsteinhorn': {name: 'קיצשטיינהורן'},
-  'schonbrunn': {name: 'ארמון שנברון'},
-  'vienna': {name: 'וינה'}
+  'schonbrunn': {name: 'ארמון שנברון',
+                 markerPos:{ x: 1122, y: 341}},
+  'vienna': {name: 'וינה',
+             markerPos:{ x:1172, y: 341}}
 }
 
 const mapMarkerOffset = {
@@ -103,7 +114,34 @@ Object.keys(stops).forEach(stop => {
 
 
 let sections = document.querySelectorAll('section');
-sections.forEach(section => setBackground(section));
+sections.forEach(section => {
+  setBackground(section);
+  var xhr = new XMLHttpRequest();
+xhr.open("GET", `/images/${section.id}`, true);
+xhr.responseType = 'document';
+xhr.onload = () => {
+  if (xhr.status === 200) {
+    var elements = xhr.response.getElementsByTagName("a");
+    for (let x of elements) {
+      if ( x.href.match(/[{0-9}*].(jpe?g|png|gif|JPE?G)$/) ) { 
+          // let img = `<img src="${x.href}">`;
+          // //img.src = x.href;
+          // section.querySelector('.gallery').insertAdjacentHTML('beforeend', img);
+          let img = document.createElement("img");
+          img.src = x.href;
+          if (stops[section.id].hasOwnProperty('additionalClasses')) {
+            stops[section.id].additionalClasses.forEach(addedClass => img.classList.add(addedClass));
+          }
+          section.querySelector('.gallery').appendChild(img);
+      } 
+    };
+  } 
+  else {
+    //alert('Request failed. Returned status of ' + xhr.status);
+  }
+}
+xhr.send()
+});
 
 function setBackground(section) {
   section.style.background = `linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('images/backgrounds/${section.id}.jpg')`;
